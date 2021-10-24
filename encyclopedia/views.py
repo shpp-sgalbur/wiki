@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from . import util
-import markdown
+import markdown2
 
 
 def index(request):
@@ -13,7 +13,7 @@ def show_article(request,url):
     
     text = util.get_entry(url)
     if text :
-        text = markdown.markdown(text)
+        text = markdown2.markdown(text)
         return render(request, 'encyclopedia/article.html', {'text':text})
     else:
         return render(request, 'encyclopedia/notfound.html', {'url':url})
