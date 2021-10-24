@@ -12,7 +12,8 @@ def index(request):
 def show_article(request,url):
     
     text = util.get_entry(url)
-    text = markdown.markdown(text)
-
-    
-    return render(request, 'encyclopedia/CSS.html', {'text':text})
+    if text :
+        text = markdown.markdown(text)
+        return render(request, 'encyclopedia/article.html', {'text':text})
+    else:
+        return render(request, 'encyclopedia/notfound.html', {'url':url})
