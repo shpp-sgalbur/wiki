@@ -35,3 +35,15 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+def list_res_find(findStr):
+    list_res = []
+    _, filenames = default_storage.listdir("entries")
+    for filename in filenames:
+        if filename.endswith(".md"):
+            if findStr in filename:
+                base_file_name = len(filename) - len(".md")
+                list_res.append(filename[:base_file_name])
+    return list_res
+            
+
