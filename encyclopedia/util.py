@@ -41,7 +41,7 @@ def list_res_find(findStr):
     _, filenames = default_storage.listdir("entries")
     for filename in filenames:
         if filename.endswith(".md"):
-            if findStr in filename:
+            if findStr.lower() in filename.lower():
                 base_file_name = len(filename) - len(".md")
                 list_res.append(filename[:base_file_name])
     return list_res

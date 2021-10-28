@@ -29,6 +29,8 @@ def find(request):
         list_found = util.list_res_find(findStr)
         if len(list_found):
             return render(request, "encyclopedia/found.html", {'findStr':request.GET['q'],'list_found':list_found})
+        else:
+            return render(request, 'encyclopedia/notfound.html', {'url':findStr})
 
-    return HttpResponseRedirect(reverse("tasks:index"))
+    
     
