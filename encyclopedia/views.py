@@ -11,6 +11,10 @@ class NewPageForm(forms.Form):
     title = forms.CharField(label="Title")
     text = forms.CharField(widget=forms.Textarea)
 
+class EditPageForm(forms.Form):
+    title = forms.CharField(widget = forms.HiddenInput())
+    text = forms.CharField(widget=forms.Textarea)
+
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
@@ -60,7 +64,16 @@ def createPage(request):
     return render(request, "encyclopedia/new_page.html", {"form": NewPageForm().as_p})
     
 def edit_page(request, url):
+    if request.method == "POST":
+        form = EditPageForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            text = form.cleaned_data['text']    
+            util.save_entry(title, text)
+            return HttpResponseRedirect(reverse("show_article", kwargs={'url':title}))
+        
     
     text = util.get_entry(url)
-    return render(request, "encyclopedia/edit_page.html", {'form':NewPageForm({'title':url, 'text':text}), 'title':url})
-    return render(request, "encyclopedia/article.html", {"form": NewPageForm().as_p})
+    
+    return render(request, "encyclopedia/edit_page.html", {'form':EditPageForm({'title':url, 'text':text}).as_p, 'title':url})
+    

@@ -45,5 +45,5 @@ def list_res_find(findStr):
                 base_file_name = len(filename) - len(".md")
                 list_res.append(filename[:base_file_name])
     return list_res
-            
+           
 
